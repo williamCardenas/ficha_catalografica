@@ -1,24 +1,42 @@
 {% extends "base.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('css/pages/login.css') }}"  />
+{% endblock %}
+
 {% block body %}
-{% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
 
-<form action="{{ path('login') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+    <div class="text-center form-group row" cz-shortcut-listen="true">
+        <form action="{{ path('login') }}" method="post" id="login_form" class="form-horizontal">
+            <fieldset>
+                <div class="form-group">
+                    <label for="username" class="col-sm-10">Username:</label>
+                    <div class="col-sm-10 no_max_width">
+                        <input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}" />
+                    </div>
+                </div>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
+                <div class="form-group">
+                    <label for="password" class="col-sm-10">Password:</label>
+                    <div class="col-sm-10 no_max_width">
+                        <input type="password" id="password" name="_password" class="form-control"/>
+                    </div>
+                </div>
 
-    {#
-        If you want to control the URL the user
-        is redirected to on success (more details below)
-        <input type="hidden" name="_target_path" value="/account" />
-    #}
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="reset" class="btn btn-default">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
 
-    <button type="submit">login</button>
-</form>
+        </form>
+    </div>
 
 {% endblock %}

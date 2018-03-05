@@ -24,4 +24,25 @@ class SecurityController extends Controller
             'error'         => $error,
         ));
     }
+
+    /**
+     * @Route("/welcome", name="welcome")
+     */
+    public function welcome(){
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $this->getUser();
+
+        if (in_array('ROLE_ADMIN',$user->getRoles()))
+        {
+            return $this->redirectToRoute('admin-home');
+        }elseif (in_array('ROLE_BIBLIOTECARIO',$user->getRoles()))
+        {
+            return $this->redirectToRoute('bibliotecario-home');
+        }elseif (in_array('ROLE_USER',$user->getRoles()))
+        {
+            return $this->redirectToRoute('user-home');
+        }else {
+            return $this->redirectToRoute('home');
+        }
+    }
 }
